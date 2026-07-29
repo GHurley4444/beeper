@@ -35,7 +35,7 @@ amp into small speakers through an RC filter, breadboard-prototyped end to end. 
 | `tools.h` | Coin flip, tarot, oracle, countdown timer, word generator, cipher wheel |
 | `songs.h` | Lyrics data for the on-screen lyrics viewer |
 | `index.h` | Boot logo bitmap (RGB565, PROGMEM) |
-| `CLAUDE.md` | Internal architecture reference (navigation model, persistence keys, gotchas) |
+| `ARCHITECTURE.md` | Internal architecture reference (navigation model, persistence keys, gotchas) |
 | `HARDWARE_INSTALL_GUIDE.md` | Battery/amp/speaker wiring guide |
 
 ## Build
