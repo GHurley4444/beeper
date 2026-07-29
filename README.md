@@ -1,19 +1,23 @@
 # Beeper
 
-A handheld cybersecurity/recon gadget built on the ESP32-2432S028R "Cheap Yellow Display"
-(320x240 ILI9341 TFT + XPT2046 resistive touch), running fully custom firmware — no off-the-shelf
-app framework, no RTOS beyond stock Arduino `setup()`/`loop()`.
+A handheld device inspired by Rein's Beeper and The Index from the Project Moon universe
+(Limbus Company, Library of Ruina), recreated as real hardware on the ESP32-2432S028R "Cheap
+Yellow Display" (320x240 ILI9341 TFT + XPT2046 resistive touch), running fully custom firmware —
+no off-the-shelf app framework, no RTOS beyond stock Arduino `setup()`/`loop()`.
 
 ## What it does
 
+Its main function mirrors The Index: issuing tasks and prompts to complete. Alongside that are
+side functions built purely for fun, plus a few practical cyber tools.
+
+- **Prescript task engine** — a touchscreen-driven task system across four themed menus (GAME,
+  CITY, CON, TASK) plus a TIMED mode, with Easy/Normal/Hard/Rare difficulty pools, no-repeat
+  shuffled decks, streak tracking, and persistent run history.
 - **Passive recon tools** — WiFi scanner (sorted by RSSI), BLE scanner with AirTag/Tile tracker
   detection via manufacturer-data pattern matching, and a Bluetooth Classic scanner. All strictly
   read-only: no association, no pairing, no injection.
 - **Hand-rolled QR engine** — a from-scratch QR v1 (ECC-L) encoder with its own Reed-Solomon
   GF(256) tables, rendered directly to the touchscreen.
-- **Prescript game engine** — a touchscreen-driven card system across four themed menus (GAME,
-  CITY, CON, TASK) plus a TIMED mode, with Easy/Normal/Hard/Rare difficulty pools, no-repeat
-  shuffled decks, streak tracking, and persistent run history.
 - **Lyrics viewer** — an original song catalogue with per-song visual effects (particles, glitch,
   wave, etc.) driven by a scramble-reveal text renderer.
 - **Side tools** — coin flip, tarot draw, 8-ball oracle, countdown timer, word generator, and a
