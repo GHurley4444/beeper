@@ -1,0 +1,58 @@
+/* The screen is a 320x240 canvas scaled up with nearest-neighbour so every
+   pixel of the 5x7 font stays sharp. Portrait: a small handheld frame.
+   Landscape: the screen fills the phone, like holding the real Beeper. */
+:root {
+  --bg: #050505;
+  --bezel: #17181a;
+  --bezel-edge: #2a2c30;
+  --pcb: #c9a227;          /* the CYD's yellow board peeking round the glass */
+  --hint: #3a4a63;
+  color-scheme: dark;      /* always dark: it's a backlit LCD */
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0; height: 100%; background: var(--bg); overflow: hidden;
+  overscroll-behavior: none; touch-action: none;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+body {
+  display: flex; align-items: center; justify-content: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  font: 11px/1.5 ui-monospace, Menlo, monospace;
+}
+#device { display: flex; flex-direction: column; align-items: center; gap: 18px; width: 100%; }
+
+#bezel {
+  position: relative;
+  width: min(calc(100vw - 24px), 560px);
+  aspect-ratio: 4 / 3;
+  padding: 10px;
+  border-radius: 14px;
+  background: var(--bezel);
+  box-shadow: 0 0 0 1px var(--bezel-edge), 0 0 0 4px #0c0c0d, 0 0 0 5px var(--pcb),
+              0 24px 60px rgba(0, 0, 0, .7);
+}
+#screen {
+  display: block; width: 100%; height: 100%;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+  background: #0f0f0f; border-radius: 2px;
+}
+#sleep {
+  position: absolute; inset: 10px; background: #000; border-radius: 2px;
+  opacity: 0; pointer-events: none; transition: opacity .6s;
+}
+#sleep.on { opacity: 1; }
+#hint { margin: 0; color: var(--hint); text-align: center; letter-spacing: .08em; }
+
+/* Landscape phone: edge to edge, no frame. */
+@media (orientation: landscape) and (max-height: 600px) {
+  #device { gap: 0; }
+  #hint { display: none; }
+  #bezel {
+    width: min(100vw - env(safe-area-inset-left) - env(safe-area-inset-right),
+               (100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 4 / 3);
+    padding: 0; border-radius: 0; box-shadow: none; background: transparent;
+  }
+  #sleep { inset: 0; }
+}

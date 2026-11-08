@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Beeper</title>
+<meta name="description" content="The Beeper handheld, on your phone.">
+<meta name="theme-color" content="#0f0f0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Beeper">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <main id="device">
+    <div id="bezel">
+      <canvas id="screen" width="320" height="240" aria-label="Beeper screen"></canvas>
+      <div id="sleep" aria-hidden="true"></div>
+    </div>
+    <p id="hint">TAP &middot; SWIPE &lt; &gt; MENUS &middot; DOWN MAIN &middot; UP SONGS<br>ROTATE FOR FULL SCREEN</p>
+  </main>
+  <script src="js/font.js"></script>
+  <script src="js/tft.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/logo.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/prescript.js"></script>
+  <script src="js/screens.js"></script>
+  <script src="js/lyrics.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/cyber.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
