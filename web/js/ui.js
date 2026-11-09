@@ -23,7 +23,9 @@ export const glyph = () => String.fromCharCode(33 + rnd(93)); // printable ASCII
 // Scramble-reveal: characters lock in left to right while the rest flicker as
 // random glyphs. Spaces stay spaces so line wrapping never jumps.
 // Screen readers get the plain text; the flicker is hidden from them.
-export function scramble(el, text, { stepMs = 90, perStep = 1, frameMs = 66, onDone, onTick } = {}) {
+// `voice` (optional) is a sound factory like beep.decode: it starts with the
+// reveal, steps with each locked character, and finishes or is cut off with it.
+export function scramble(el, text, { stepMs = 90, perStep = 1, frameMs = 66, onDone, voice } = {}) {
   const done = h('span'), rest = h('span', { class: 'scr' });
   el.replaceChildren(h('span', { class: 'sr-only' }, text), h('span', { 'aria-hidden': 'true' }, done, rest));
   let i = reducedMotion.matches ? text.length : 0, last = performance.now(), id = 0;
@@ -31,16 +33,17 @@ export function scramble(el, text, { stepMs = 90, perStep = 1, frameMs = 66, onD
     done.textContent = text.slice(0, i);
     rest.textContent = text.slice(i).replace(/\S/g, glyph);
   };
-  const finish = () => { clearInterval(id); id = 0; onDone?.(); };
   paint();
   if (i >= text.length) { queueMicrotask(() => onDone?.()); return () => {}; }
+  const v = voice?.();
+  const finish = () => { clearInterval(id); id = 0; v?.done(); onDone?.(); };
   id = setInterval(() => {
     const now = performance.now();
-    if (now - last >= stepMs) { i = Math.min(text.length, i + perStep); last = now; onTick?.(); }
+    if (now - last >= stepMs) { i = Math.min(text.length, i + perStep); last = now; v?.step(); }
     paint();
     if (i >= text.length) finish();
   }, Math.min(frameMs, stepMs));
-  return () => clearInterval(id);
+  return () => { if (id) { clearInterval(id); id = 0; v?.cancel(); } };
 }
 
 // Per-screen lifetime: timers and listeners registered here are removed

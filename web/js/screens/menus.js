@@ -1,5 +1,5 @@
 // Main menu, tools list, game picker, settings and history.
-import { h, header, stepper, choices, confirmDialog } from '../ui.js';
+import { h, header, stepper, choices, confirmDialog, scramble } from '../ui.js';
 import * as E from '../engine.js';
 import { LOOP } from './play.js';
 import D from '../../data.js';
@@ -85,20 +85,30 @@ export function settings(root, app) {
 
 const PAGES = { timer: timerPage, idle: idlePage, speed: speedPage, sound: soundPage, difficulty: difficultyPage, pools: poolsPage, reset: resetPage };
 
-function soundPage(app) {
+function soundPage(app, life) {
   const s = app.state.settings;
+  // Preview plays a real decode at the current speed settings.
+  const sample = h('p', { class: 'card-text sound-sample' }, '_RECEIVE THE PRESCRIPT._');
+  let stop = () => {};
+  life.add(() => stop());
+  const preview = () => {
+    stop();
+    stop = scramble(sample, '_RECEIVE THE PRESCRIPT._', { stepMs: s.glyphMs, perStep: s.revealChars, voice: beep.decode });
+  };
   return ['SOUND',
-    h('p', { class: 'lede' }, 'BEEPS WHILE TEXT DECODES, ON PASS AND FAIL, NEW TIMED CARDS AND THE COUNTDOWN ALARM. FOLLOWS THE IPHONE SILENT SWITCH.'),
+    h('p', { class: 'lede' }, 'A CHIRP AND DATA WARBLE WHILE TEXT DECODES, A LOCK-IN BEEP WHEN IT SETTLES, CHIMES FOR PASS AND FAIL, NEW TIMED CARDS AND THE COUNTDOWN ALARM. FOLLOWS THE IPHONE SILENT SWITCH.'),
     choices('SOUND', [['ON', true], ['OFF', false]], {
       get: () => s.sound,
-      set: (v) => { s.sound = v; setSound(v); app.save(); if (v) beep.pass(); },
-    })];
+      set: (v) => { s.sound = v; setSound(v); app.save(); if (v) preview(); },
+    }),
+    sample,
+    h('button', { class: 'btn btn-primary', type: 'button', onclick: preview }, 'PREVIEW')];
 }
 
 export function settingsPage(root, app, life, name) {
   const page = PAGES[name];
   if (!page) return false;
-  const [title, ...content] = page(app);
+  const [title, ...content] = page(app, life);
   root.replaceChildren(h('section', { class: 'screen' },
     header(title, { back: () => app.back('/settings') }),
     h('div', { class: 'content' }, content)));

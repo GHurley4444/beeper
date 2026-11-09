@@ -127,8 +127,8 @@ function tarot(app, life) {
     view.replaceChildren(h('button', { class: 'tarot-card drawn', type: 'button', onclick: draw, 'aria-label': 'Draw the next card' }, name, rule, desc),
       h('p', { class: 'hint' }, 'TAP TO DRAW NEXT CARD'));
     stop = scramble(name, card.name, {
-      stepMs: glyphMs, onTick: beep.tick,
-      onDone: () => { rule.hidden = false; stop = scramble(desc, card.desc, { stepMs: glyphMs, onTick: beep.tick }); },
+      stepMs: glyphMs, voice: beep.decode,
+      onDone: () => { rule.hidden = false; stop = scramble(desc, card.desc, { stepMs: glyphMs, voice: beep.decode }); },
     });
     paintCount();
   };
@@ -172,7 +172,7 @@ function oracle(app, life) {
   life.add(() => stop());
   const orb = h('button', {
     class: 'orb', type: 'button', 'aria-label': 'Consult the oracle',
-    onclick: () => { stop(); stop = scramble(text, pick(D.oracle), { stepMs: 80, onTick: beep.tick }); },
+    onclick: () => { stop(); stop = scramble(text, pick(D.oracle), { stepMs: 80, voice: beep.decode }); },
   }, text);
   return ['ORACLE', [orb, h('p', { class: 'hint' }, 'ASK A QUESTION, THEN TAP THE ORB')]];
 }
@@ -247,7 +247,7 @@ function words(app, life) {
   const paintTabs = () => buttons.forEach((b, i) => b.setAttribute('aria-selected', String(cats[i] === cat)));
   paintTabs();
   return ['WORD GENERATOR', [tabs, result,
-    h('button', { class: 'btn btn-primary', type: 'button', onclick: () => { stop(); stop = scramble(result, pick(D.words[cat]), { stepMs: 60, onTick: beep.tick }); } }, 'GENERATE')]];
+    h('button', { class: 'btn btn-primary', type: 'button', onclick: () => { stop(); stop = scramble(result, pick(D.words[cat]), { stepMs: 60, voice: beep.decode }); } }, 'GENERATE')]];
 }
 
 // ── Cipher wheel (Caesar shift) ──────────────────

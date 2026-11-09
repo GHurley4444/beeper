@@ -40,8 +40,7 @@ export function showResult(app, { pass, newBest, reward, streak, best, timed = f
           hint.hidden = true;
           const line = h('p', { class: 'result-reward' });
           extra.replaceChildren(line);
-          beep.reward();
-          stop = scramble(line, reward, { stepMs: 45, onDone: () => { stage = 'rewardHold'; hint.hidden = false; } });
+          stop = scramble(line, reward, { stepMs: 45, voice: beep.decode, onDone: () => { stage = 'rewardHold'; hint.hidden = false; } });
         } else drain();
       } else if (stage === 'rewardHold') drain();
     };
