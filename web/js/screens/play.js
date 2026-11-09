@@ -87,7 +87,7 @@ function prescriptView(body, app, life, idx) {
   app.save();
 
   const text = h('p', { class: `card-text${card.rare ? ' rare' : ''}` });
-  life.add(scramble(text, E.cardLabel(card), { stepMs: st.settings.glyphMs, perStep: st.settings.revealChars, onTick: beep.tick }));
+  life.add(scramble(text, E.cardLabel(card), { stepMs: st.settings.glyphMs, perStep: st.settings.revealChars, voice: beep.decode }));
 
   const answer = async (pass) => {
     passBtn.disabled = failBtn.disabled = true;
@@ -142,7 +142,7 @@ function timedView(body, app, life) {
 
   if (!t.paused) app.stayAwake(life);
   const text = h('p', { class: `card-text${t.rare ? ' rare' : ''}${t.paused ? ' paused' : ''}${t.passed ? ' passed' : ''}` });
-  life.add(scramble(text, E.cardLabel(t), { stepMs: st.settings.glyphMs, perStep: st.settings.revealChars, onTick: beep.tick }));
+  life.add(scramble(text, E.cardLabel(t), { stepMs: st.settings.glyphMs, perStep: st.settings.revealChars, voice: beep.decode }));
 
   const fill = h('div', { class: 'tm-fill' });
   const bar = h('div', { class: 'tm-bar', role: 'progressbar', 'aria-label': 'Time remaining', 'aria-valuemin': 0, 'aria-valuemax': 100 }, fill);

@@ -1,5 +1,5 @@
 // Offline support. Bump VERSION when shipping changes so every file updates together.
-const VERSION = 'beeper-2';
+const VERSION = 'beeper-3';
 const FILES = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest', 'data.js',
   'js/app.js', 'js/engine.js', 'js/store.js', 'js/ui.js', 'js/sound.js',
