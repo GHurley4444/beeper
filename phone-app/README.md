@@ -42,6 +42,10 @@ so the app is plain HTML/CSS/JavaScript: no framework, no dependencies, no build
 
 The app has to be served over HTTPS. Pick one:
 
+0. **Tailscale (private, recommended):** on a computer on your tailnet, check out this branch and run
+   `tailscale serve --bg /full/path/to/beeper/phone-app`. Open the `https://<computer>.<tailnet>.ts.net/` URL it prints
+   in Safari, with the iPhone's Tailscale app connected. Only your tailnet devices can reach it. If it complains about
+   HTTPS, enable MagicDNS and HTTPS certificates in the Tailscale admin console. `tailscale serve reset` stops it.
 1. **GitHub Pages:** in repo Settings → Pages, deploy from the branch, then open `https://<user>.github.io/<repo>/phone-app/`.
    Note that Pages sites are public.
 2. **Any static host** (Netlify drop, Cloudflare Pages, etc.): upload the `phone-app/` folder.
