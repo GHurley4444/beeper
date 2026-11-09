@@ -1,0 +1,1 @@
+{ "private": true, "type": "module", "scripts": { "build": "node tools/build-data.mjs", "test": "node --test test/*.test.js", "start": "python -m http.server 4173 --bind 127.0.0.1" } }
